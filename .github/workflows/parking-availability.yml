@@ -1,13 +1,8 @@
 name: Airport Parking Availability Scraper
 
-# on:
-#   schedule:
-#     - cron: '0 * * * *' # Run every hour
-#   workflow_dispatch: # Allow manual triggering
-
 on:
-  push:
-    branches: ['main']
+  schedule:
+    - cron: '0 * * * *' # Run every hour
   workflow_dispatch: # Allow manual triggering
 
 permissions:
