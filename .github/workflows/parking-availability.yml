@@ -31,18 +31,15 @@ jobs:
         run: |
           node index.js > parking_results.txt
 
-      - name: Send KakaoTalk Notification
-        env:
-          KAKAO_ACCESS_TOKEN: ${{ secrets.KAKAO_ACCESS_TOKEN }}
+      - name: Update README with Parking Results
         run: |
-          # Use Kakao API to send message
-          curl -X POST "https://kapi.kakao.com/v2/api/talk/memo/default/send" \
-          -H "Authorization: Bearer $KAKAO_ACCESS_TOKEN" \
-          -H "Content-Type: application/x-www-form-urlencoded" \
-          --data-urlencode "template_object={
-            'object_type': 'text',
-            'text': '$(cat parking_results.txt)',
-            'link': {
-              'web_url': 'https://github.com/your-username/your-repo'
-            }
-          }"
+          echo "## Parking Availability Update" > README.md
+          echo "\`\`\`" >> README.md
+          cat parking_results.txt >> README.md
+          echo "\`\`\`" >> README.md
+
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add README.md
+          git commit -m "Update parking availability results"
+          git push
