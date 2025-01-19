@@ -21,11 +21,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
+
+      - name: Install Yarn
+        run: |
+          npm install -g yarn
 
       - name: Install dependencies
         run: |
-          npm install puppeteer
+          yarn install
 
       - name: Scrape Parking Availability
         run: |
@@ -33,11 +37,21 @@ jobs:
 
       - name: Update README with Parking Results
         run: |
-          echo "## Parking Availability Update" > README.md
-          echo "\`\`\`" >> README.md
-          cat parking_results.txt >> README.md
-          echo "\`\`\`" >> README.md
+          current_time=$(TZ='Asia/Seoul' date '+%Y-%m-%d %H:%M:%S %Z')
+          temp_file=$(mktemp)
 
+          echo "## Parking Availability Update - $current_time" > "$temp_file"
+          echo "" >> "$temp_file"
+          echo "\`\`\`" >> "$temp_file"
+          cat parking_results.txt >> "$temp_file"
+          echo "\`\`\`" >> "$temp_file"
+          echo "" >> "$temp_file"
+
+          if [ -f README.md ]; then
+            cat README.md >> "$temp_file"
+          fi
+
+          mv "$temp_file" README.md
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add README.md
