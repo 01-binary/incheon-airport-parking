@@ -43,7 +43,7 @@ jobs:
           current_time=$(TZ='Asia/Seoul' date '+%Y-%m-%d %H:%M:%S %Z')
           temp_file=$(mktemp)
 
-          echo "## Parking Availability Update - $current_time" > "$temp_file"
+          echo "## $current_time" > "$temp_file"
           echo "" >> "$temp_file"
           echo "\`\`\`" >> "$temp_file"
           cat parking_results.txt >> "$temp_file"
