@@ -2,7 +2,7 @@ name: Airport Parking Availability Scraper
 
 on:
   schedule:
-    - cron: '0 */2 * * *' # Run every 2 hours
+    - cron: '0 * * * *' # Run every hour
   workflow_dispatch: # Allow manual triggering
 
 permissions:
@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   scrape-and-notify:
-    environment: KAKAO
     runs-on: ubuntu-latest
 
     steps:
