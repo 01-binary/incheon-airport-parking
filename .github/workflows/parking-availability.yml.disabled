@@ -1,4 +1,4 @@
-name: Airport Parking Availability Scraper
+name: Airport Parking Availability Scraper (Disabled)
 
 on:
   schedule:
